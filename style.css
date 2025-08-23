@@ -1,8 +1,12 @@
 * {
   margin: 0px;
   padding: 0px;
-  background-color: #3c6e71;
+  background-color: rgb(20, 20, 33);
   font-style: arial;
+
+}
+body {
+  overflow-x: hidden; /* removes horizontal scroll */
 }
 .header {
   width: 100vw;
@@ -27,6 +31,7 @@
   align-items: center;
   gap: 5vmin;
   margin-right: 20vmin;
+  color: white;
 }
 .title i {
   background-color: #068e43;
@@ -55,38 +60,34 @@ p {
   outline: none;
   border: none;
   font-size: 1rem;
-  background-color: #3c6e71;
   color: white;
 }
 .user i {
   font-size: 1.2rem;
 }
-.panel {
+.panel1 {
   display: flex;
   flex-direction: column;
   height: 100%;
-  width: 60vmin;
   margin-bottom: 20px;
 }
-.game-control{
-  z-index: 200;
+.game-control {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap:5vmin;
+  gap: 5vmin;
   width: 30vmin;
   height: 30vmin;
-  margin-left: 30vmin;
-  margin-top:12vmin;
-  border-radius: 0.5rem;
+  margin-top: 12vmin;
+  border-radius: 1rem;
   border: 1.5px solid rgb(26, 159, 141);
 }
-.game-control h2{
+.game-control h2 {
   color: white;
   font-size: 1.2rem;
 }
-.game-control button{
+.game-control button {
   width: 25vmin;
   height: 6vmin;
   outline: none;
@@ -96,67 +97,176 @@ p {
   color: white;
   font-size: 1.2rem;
 }
-.difficulty{
-  z-index: 200;
+.difficulty {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap:5vmin;
+  gap: 5vmin;
   width: 30vmin;
-  height: 52vmin;
-  margin-left: 30vmin;
-  margin-top:5vmin;
-  border-radius: 0.5rem;
+  height: 52vh;
+  margin-top: 5vmin;
+  border-radius: 1rem;
   border: 1.5px solid rgb(26, 159, 141);
 }
-.btn{
+.btn {
   width: 25vmin;
   height: 10vmin;
   outline: none;
   border: 1.5px solid rgb(26, 159, 141);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   color: white;
   font-size: 1.2rem;
 }
-.btn p{
+.btn p {
   color: #1eb182;
 }
-.btn h2{
+.btn h2 {
   color: white;
   font-size: 1.2rem;
 }
-.btn{
+.btn {
   font-size: 0.85rem;
 }
-.difficulty h2{
+.difficulty h2 {
   color: white;
   font-size: 1.2rem;
 }
-.game-tips{
-  z-index: 200;
+.game-tips {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 30vmin;
   height: 25vmin;
-  margin-left: 30vmin;
-  margin-top:5vmin;
-  border-radius: 0.5rem;
+  margin-top: 5vmin;
+  border-radius: 1rem;
   border: 1.5px solid rgb(26, 159, 141);
   flex-wrap: wrap;
-  justify-content: center;  
+  justify-content: center;
 }
-.game-tips ul{
+.game-tips ul {
   padding-left: 20px;
   color: #1eb182;
 }
-.game-tips h2{
+.game-tips h2 {
   color: white;
   padding-left: 10px;
+  z-index: 200;
 }
-.game{
+.game {
+  margin-left: 28vmin;
+  margin-right: 30vmin;
   display: flex;
   flex-direction: row;
-  gap: 5vmin;
+  justify-content: space-between;
+}
+.container {
+  margin-top: 12vmin;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1.5px solid rgb(26, 159, 141);
+  border-radius: 1rem;
+}
+.game-board {
+  width: 75vmin;
+  height: 65vmin;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+.column {
+  width: 16vmin;
+  height: 16vmin;
+  background-color: #a09d9d;
+  border: none;
+  border-radius: 4rem;
+  font-size: 3rem;
+}
+.lev {
+  display: flex;
+  flex-direction: row;
+  margin-left: 5vmin;
+}
+.container h2 {
+  color: white;
+  margin-left: 4vmin;
+}
+.container p {
+  padding-top: 1vmin;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+}
+.container h2 {
+  padding-top: 10px;
+  font-size: 2rem;
+}
+.lev p {
+  color: white;
+  font-size: 1rem;
+}
+.level {
+  font-size: 0.5rem;
+}
+.box{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 30vmin;
+  height: 20vmin;
+  border-radius: 1rem;
+  border: 1.5px solid rgb(26, 159, 141);
+  color: white;
+  font-size: 1rem;
+}
+.panel2{
+  display: flex;
+  flex-direction: column;
+  height: 85vh;
+  padding-top: 12vmin;
+  gap: 3vmin;
+}
+.current-value{
+  color: white;
+  font-size: 3rem;
+}
+.high-value{
+  color: white;
+  font-size: 3rem;
+}
+.alin{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+}
+.time{
+  color: #278f5d;
+  font-size: 2rem;
+  margin-top: 10px;
+}
+.loader-container {
+  width: 80%;
+  height: 10px;
+  border: 2px solid #3498db;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #ddd;
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  background: #278f5d;
+  animation: reverseLoader timeout linear forwards;
+}
+@keyframes reverseLoader {
+  from { width: 100%; }
+  to   { width: 0%; }
 }

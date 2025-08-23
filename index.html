@@ -34,40 +34,45 @@
       </div>
     </header>
     <main>
-    <div class="game">
-          <div class="panel">
-        <div class="game-control">
-          <h2>Game Control</h2>
-          <button class="btn-start">Start Game</button>
-          <button class="btn-reset">Reset</button>
+      <div class="game">
+        <div class="panel1">
+          <div class="game-control">
+            <h2>Game Control</h2>
+            <button class="btn-start">Start Game</button>
+            <button class="btn-reset">Reset</button>
+          </div>
+          <div class="difficulty">
+            <h2>Difficulty</h2>
+            <button class="btn-esay btn">
+              <h2>Esay</h2>
+              <p>90s.slow moles. +10pts</p>
+            </button>
+            <button class="btn-midium btn">
+              <h2>Medium</h2>
+              <p>90s.slow moles. +10pts</p>
+            </button>
+            <button class="btn-hard btn">
+              <h2>Hard</h2>
+              <p>90s.slow moles. +10pts</p>
+            </button>
+          </div>
+          <div class="game-tips">
+            <h2>Game Tips</h2>
+            <ul>
+              <li>Click moles quickly before they disappear</li>
+              <li>Higher difficulty = more points per hit</li>
+              <li>Watch for patterns in mole spawning</li>
+              <li>Stay focused as time runs out!</li>
+            </ul>
+          </div>
         </div>
-        <div class="difficulty">
-          <h2>Difficulty</h2>
-          <button class="btn-esay btn">
-            <h2>Esay</h2>
-            <p>90s.slow moles. +10pts</p>
-          </button>
-          <button class="btn-midium btn">
-            <h2>Medium</h2>
-            <p>90s.slow moles. +10pts</p>
-          </button>
-          <button class="btn-hard btn">
-            <h2>Hard</h2>
-            <p>90s.slow moles. +10pts</p>
-          </button>
-        </div>
-        <div class="game-tips">
-          <h2>Game Tips</h2>
-          <ul>
-            <li>Click moles quickly before they disappear</li>
-            <li>Higher difficulty = more points per hit</li>
-            <li>Watch for patterns in mole spawning</li>
-            <li>Stay focused as time runs out!</li>
-          </ul>
-        </div>
-      </div>
-      <div class="game-board">
         <div class="container">
+          <h2>Game Board</h2>
+          <div class="lev">
+            <p>difficulty:</p>
+            <p class="level">Easy</p>
+          </div>
+          <div class="game-board">
             <button class="column"></button>
             <button class="column"></button>
             <button class="column"></button>
@@ -77,9 +82,33 @@
             <button class="column"></button>
             <button class="column"></button>
             <button class="column"></button>
+          </div>
+          <p>Click "Start Game" to begin!</p>
         </div>
+        <div class="panel2">
+          <div class="current-score box">
+            <h2>Current Score</h2>
+            <p class="current-value">0</p>
+            <p>points</p>
+          </div>
+          <div class="time-left box">
+           <div class="alin">
+             <h2>Time Left</h2>
+            <i class="fa-solid fa-clock"></i>
+           </div>
+           <p class="time">time</p>
+           <div class="loader-container">
+              <div class="loader"></div>
+            </div>
+          </div>
+          <div class="high-score box">
+            <div class="alin">
+              <h2>High Score</h2>
+              <i class="fa-solid fa-trophy"></i>
+            </div>
+            <p class="high-value">0</p>
+          </div>
       </div>
-    </div>
     </main>
     <script src="app.js"></script>
   </body>
