@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Whac-A-Mole</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+      integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <header>
+      <div class="header">
+        <div class="title">
+          <i class="fa-solid fa-gamepad"></i>
+          <h1>Whac-A-Mole</h1>
+        </div>
+        <div class="detail">
+          <div class="score">
+            <i class="fa-solid fa-trophy"></i>
+            <p>score-value</p>
+          </div>
+          <div class="user">
+            <i class="fa-solid fa-user"></i>
+            <input placeholder="Username" />
+          </div>
+          <i class="fa-solid fa-gear"></i>
+        </div>
+      </div>
+    </header>
+    <main>
+    <div class="game">
+          <div class="panel">
+        <div class="game-control">
+          <h2>Game Control</h2>
+          <button class="btn-start">Start Game</button>
+          <button class="btn-reset">Reset</button>
+        </div>
+        <div class="difficulty">
+          <h2>Difficulty</h2>
+          <button class="btn-esay btn">
+            <h2>Esay</h2>
+            <p>90s.slow moles. +10pts</p>
+          </button>
+          <button class="btn-midium btn">
+            <h2>Medium</h2>
+            <p>90s.slow moles. +10pts</p>
+          </button>
+          <button class="btn-hard btn">
+            <h2>Hard</h2>
+            <p>90s.slow moles. +10pts</p>
+          </button>
+        </div>
+        <div class="game-tips">
+          <h2>Game Tips</h2>
+          <ul>
+            <li>Click moles quickly before they disappear</li>
+            <li>Higher difficulty = more points per hit</li>
+            <li>Watch for patterns in mole spawning</li>
+            <li>Stay focused as time runs out!</li>
+          </ul>
+        </div>
+      </div>
+      <div class="game-board">
+        <div class="container">
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+            <button class="column"></button>
+        </div>
+      </div>
+    </div>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>
