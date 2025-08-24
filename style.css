@@ -3,10 +3,10 @@
   padding: 0px;
   background-color: rgb(20, 20, 33);
   font-style: arial;
-
+  flex-shrink: 0;
 }
 body {
-  overflow-x: hidden; /* removes horizontal scroll */
+  overflow-x: hidden;
 }
 .header {
   width: 100vw;
@@ -96,6 +96,7 @@ p {
   background-color: rgb(24, 176, 115);
   color: white;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .difficulty {
   display: flex;
@@ -117,6 +118,7 @@ p {
   border-radius: 1rem;
   color: white;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 .btn p {
   color: #1eb182;
@@ -185,6 +187,7 @@ p {
   border: none;
   border-radius: 4rem;
   font-size: 3rem;
+  cursor: pointer;
 }
 .lev {
   display: flex;
@@ -247,7 +250,7 @@ p {
   gap: 40px;
 }
 .time{
-  color: #278f5d;
+  color:white;
   font-size: 2rem;
   margin-top: 10px;
 }
@@ -264,7 +267,6 @@ p {
   width: 100%;
   height: 100%;
   background: #278f5d;
-  animation: reverseLoader timeout linear forwards;
 }
 @keyframes reverseLoader {
   from { width: 100%; }
