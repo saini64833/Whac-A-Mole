@@ -3,7 +3,9 @@ const resetButton = document.querySelector(".btn-reset");
 const easyButton = document.querySelector(".easy");
 const mediumButton = document.querySelector(".medium");
 const hardButton = document.querySelector(".hard");
-//difficulty panel handle
+let levelText = document.querySelector(".level");
+
+// difficulty panel handle
 const levels = {
   easy: {
     timeleft: 90,
@@ -24,18 +26,47 @@ const levels = {
     text: "Hard",
   },
 };
+
+let scoreDisplay = document.querySelector(".current-value");
+let timeDisplay = document.querySelector(".time");
+const columns = document.querySelectorAll(".column");
+let timeduration = document.querySelector(".loader");
+let highestScore = document.querySelector(".high-value");
+
+let score = 0;
+let points = 10;
+let timeleft = parseInt(timeDisplay.innerText);
+let moleSpeed = 1500;
+
+let countdown;
+let moleInterval;
+
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 easyButton.addEventListener("click", () => {
   levelText.innerText = levels.easy.text;
   timeDisplay.innerText = levels.easy.timeleft;
+  timeleft = levels.easy.timeleft;
+  points = levels.easy.points;
+  moleSpeed = levels.easy.moleSpeed;
 });
 mediumButton.addEventListener("click", () => {
   levelText.innerText = levels.medium.text;
   timeDisplay.innerText = levels.medium.timeleft;
+  timeleft = levels.medium.timeleft;
+  points = levels.medium.points;
+  moleSpeed = levels.medium.moleSpeed;
 });
 hardButton.addEventListener("click", () => {
   levelText.innerText = levels.hard.text;
   timeDisplay.innerText = levels.hard.timeleft;
+  timeleft = levels.hard.timeleft;
+  points = levels.hard.points;
+  moleSpeed = levels.hard.moleSpeed;
 });
+
 const buttons = [easyButton, mediumButton, hardButton];
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -47,60 +78,36 @@ buttons.forEach((button) => {
   button.disabled = false;
   button.style.opacity = 1;
 });
-let scoreDisplay = document.querySelector(".current-value");
-let timeDisplay = document.querySelector(".time");
-const columns = document.querySelectorAll(".column");
-let levelText = document.querySelector(".level");
-let timeduration = document.querySelector(".loader");
-let highestScore = document.querySelector(".high-value");
-  let score = 0;
-  let points;
-  let timeleft = parseInt(timeDisplay.innerText); // keep in seconds
-  let moleSpeed;
-if (levelText.innerText === "Easy") {
-    moleSpeed = levels.easy.moleSpeed;
-    points = levels.easy.points;
-  } else if (levelText.innerText === "Medium") {
-    moleSpeed = levels.medium.moleSpeed;
-    points = levels.medium.points;
-  } else if (levelText.innerText === "Hard") {
-    moleSpeed = levels.hard.moleSpeed;
-    points = levels.hard.points;
-  }
-// Game board
-function startGame() {
-  timeduration.style.animation = `reverseLoader ${timeleft}s linear forwards`;
-  let countdown = setInterval(() => {
-    timeleft--;
-    timeDisplay.innerText = timeleft;
-    if (timeleft <= 0) {
-      clearInterval(countdown);
-      clearInterval(moleInterval);
-      columns.forEach((col) => (col.innerText = ""));
-      if (score > parseInt(highestScore.innerText)) {
-        highestScore.innerText = score;
-      }
-      alert("Game Over! Your score is " + score);
-      score = 0;
-      scoreDisplay.innerText = score;
-      timeDisplay.innerText = levels.easy.timeleft;
-      // Re-enable difficulty buttons
-      buttons.forEach((btn) => {
-        btn.disabled = false;
-        btn.style.opacity = 1;
-      });
-    }
-  }, 1000);
 
-  // Mole spawner (based on moleSpeed)
-  let moleInterval = setInterval(() => {
+async function startGame() {
+  try {
+    timeduration.style.animation = `loader ${timeleft}s linear forwards`;
+
+    countdown = setInterval(() => {
+      timeleft--;
+      timeDisplay.innerText = timeleft;
+      if (timeleft <= 0) {
+        endGame();
+      }
+    }, 1000);
+    await delay(100);
+    await spawnMoles();
+  } catch (error) {
+    console.error("Error starting game:", error);
+  }
+}
+
+async function spawnMoles() {
+  moleInterval = setInterval(() => {
     let index = Math.floor(Math.random() * columns.length);
     columns[index].innerText = "mole";
-      columns[index].addEventListener("click", () => {
-        score += points;
-        scoreDisplay.innerText = score;
-      columns.forEach((col) => col.innerText = "");
-      });
+
+    columns[index].onclick = () => {
+      score += points;
+      scoreDisplay.innerText = score;
+      columns[index].innerText = "";
+    };
+
     setTimeout(() => {
       if (columns[index].innerText === "mole") {
         columns[index].innerText = "";
@@ -109,10 +116,53 @@ function startGame() {
   }, moleSpeed);
 }
 
+async function endGame() {
+  try {
+    clearInterval(countdown);
+    clearInterval(moleInterval);
+    columns.forEach((col) => (col.innerText = ""));
+
+    if (score > parseInt(highestScore.innerText)) {
+      highestScore.innerText = score;
+    }
+
+    alert("Game Over! Your score is " + score);
+
+    score = 0;
+    scoreDisplay.innerText = score;
+    timeDisplay.innerText = levels.easy.timeleft;
+
+    buttons.forEach((btn) => {
+      btn.disabled = false;
+      btn.style.opacity = 1;
+    });
+    startButton.disabled = false;
+  } catch (error) {
+    console.error("Error ending game:", error);
+  }
+}
+
+resetButton.addEventListener("click", async () => {
+  try {
+    clearInterval(countdown);
+    clearInterval(moleInterval);
+    score = 0;
+    scoreDisplay.innerText = score;
+    timeDisplay.innerText = levels.easy.timeleft;
+    startButton.disabled = false;
+    buttons.forEach((btn) => {
+      btn.disabled = false;
+      btn.style.opacity = 1;
+    });
+  } catch (error) {
+    console.error("Error resetting game:", error);
+  }
+});
+
 startButton.addEventListener("click", async () => {
-  buttons.forEach((btn) => {
-    btn.disabled = true;
-    btn.style.opacity = 0.6;
-  });
-    startGame();
+  startButton.disabled = true;
+  resetButton.disabled = false;
+  score = 0;
+  scoreDisplay.innerText = score;
+  await startGame();
 });
