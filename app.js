@@ -34,13 +34,11 @@ let timeduration = document.querySelector(".loader");
 let highestScore = document.querySelector(".high-value");
 
 let score = 0;
-let points = 10;
-let timeleft = parseInt(timeDisplay.innerText);
-let moleSpeed = 1500;
-
+let points = levels.easy.points;
+let moleSpeed = levels.easy.moleSpeed;
+let timeleft = levels.easy.timeleft;
 let countdown;
 let moleInterval;
-
 function delay(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -66,7 +64,6 @@ hardButton.addEventListener("click", () => {
   points = levels.hard.points;
   moleSpeed = levels.hard.moleSpeed;
 });
-
 const buttons = [easyButton, mediumButton, hardButton];
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -80,83 +77,70 @@ buttons.forEach((button) => {
 });
 
 async function startGame() {
-  try {
-    timeduration.style.animation = `loader ${timeleft}s linear forwards`;
-
-    countdown = setInterval(() => {
-      timeleft--;
-      timeDisplay.innerText = timeleft;
-      if (timeleft <= 0) {
-        endGame();
+  timeduration.style.animation = `loader ${timeleft}s linear forwards`;
+  countdown = setInterval(() => {
+    timeleft--;
+    timeDisplay.innerText = timeleft;
+    if (timeleft <= 0) {
+      endGame();
+    }
+  }, 1000);
+  for (let column of columns) {
+    column.onclick = () => {
+      if (column.innerText == "mole") {
+        score += points;
       }
-    }, 1000);
-    await delay(100);
-    await spawnMoles();
-  } catch (error) {
-    console.error("Error starting game:", error);
+      scoreDisplay.innerText = score;
+      column.innerText = "";
+    };
   }
+  moleInterval = setInterval(spawnMoles, moleSpeed);
 }
+
+
 
 async function spawnMoles() {
-  moleInterval = setInterval(() => {
-    let index = Math.floor(Math.random() * columns.length);
-    columns[index].innerText = "mole";
+  let index = Math.floor(Math.random() * columns.length);
+  columns[index].innerText = "mole";
+  console.log(moleSpeed);
+  await delay(moleSpeed - 200);
 
-    columns[index].onclick = () => {
-      score += points;
-      scoreDisplay.innerText = score;
-      columns[index].innerText = "";
-    };
-
-    setTimeout(() => {
-      if (columns[index].innerText === "mole") {
-        columns[index].innerText = "";
-      }
-    }, moleSpeed - 200);
-  }, moleSpeed);
+  columns[index].innerText = "";
 }
 
+
 async function endGame() {
-  try {
-    clearInterval(countdown);
-    clearInterval(moleInterval);
-    columns.forEach((col) => (col.innerText = ""));
-
-    if (score > parseInt(highestScore.innerText)) {
-      highestScore.innerText = score;
-    }
-
-    alert("Game Over! Your score is " + score);
-
-    score = 0;
-    scoreDisplay.innerText = score;
-    timeDisplay.innerText = levels.easy.timeleft;
-
-    buttons.forEach((btn) => {
-      btn.disabled = false;
-      btn.style.opacity = 1;
-    });
-    startButton.disabled = false;
-  } catch (error) {
-    console.error("Error ending game:", error);
+  clearInterval(countdown);
+  clearInterval(moleInterval);
+  columns.forEach((col) => (col.innerText = ""));
+  if (score > parseInt(highestScore.innerText)) {
+    highestScore.innerText = score;
   }
+
+  alert("Game Over! Your score is " + score);
+
+  score = 0;
+  scoreDisplay.innerText = score;
+  timeDisplay.innerText = levels.easy.timeleft;
+
+  buttons.forEach((btn) => {
+    btn.disabled = false;
+    btn.style.opacity = 1;
+  });
+  startButton.disabled = false;
 }
 
 resetButton.addEventListener("click", async () => {
-  try {
-    clearInterval(countdown);
-    clearInterval(moleInterval);
-    score = 0;
-    scoreDisplay.innerText = score;
-    timeDisplay.innerText = levels.easy.timeleft;
-    startButton.disabled = false;
-    buttons.forEach((btn) => {
-      btn.disabled = false;
-      btn.style.opacity = 1;
-    });
-  } catch (error) {
-    console.error("Error resetting game:", error);
-  }
+  clearInterval(countdown);
+  clearInterval(moleInterval);
+  score = 0;
+  scoreDisplay.innerText = score;
+  timeDisplay.innerText = levels.easy.timeleft;
+  startButton.disabled = false;
+  buttons.forEach((btn) => {
+    btn.disabled = false;
+    btn.style.opacity = 1;
+  });
 });
 
 startButton.addEventListener("click", async () => {
@@ -164,5 +148,5 @@ startButton.addEventListener("click", async () => {
   resetButton.disabled = false;
   score = 0;
   scoreDisplay.innerText = score;
-  await startGame();
+  startGame();
 });
