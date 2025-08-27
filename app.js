@@ -47,24 +47,17 @@ buttons.forEach((button) => {
   button.disabled = false;
   button.style.opacity = 1;
 });
-let scoreDisplay = document.querySelector(".score-value");
+let scoreDisplay = document.querySelector(".current-value");
 let timeDisplay = document.querySelector(".time");
 const columns = document.querySelectorAll(".column");
 let levelText = document.querySelector(".level");
 let timeduration = document.querySelector(".loader");
 let highestScore = document.querySelector(".high-value");
-function startAnimation() {
-  let duration = parseInt(timeDisplay.innerText); // convert text to number
-  timeduration.style.animation = `reverseLoader ${duration}s linear forwards`;
-  return duration;
-}
-// Game board
-function startGame() {
   let score = 0;
-  let points
-  let timeleft = parseInt(timeDisplay.innerText);
+  let points;
+  let timeleft = parseInt(timeDisplay.innerText); // keep in seconds
   let moleSpeed;
-  if (levelText.innerText === "Easy") {
+if (levelText.innerText === "Easy") {
     moleSpeed = levels.easy.moleSpeed;
     points = levels.easy.points;
   } else if (levelText.innerText === "Medium") {
@@ -74,31 +67,52 @@ function startGame() {
     moleSpeed = levels.hard.moleSpeed;
     points = levels.hard.points;
   }
-  setTimeout(() => {
-    // mole spawning logic
-    let gameTimer = setInterval(() => {
-      timeleft--;
-      timeDisplay.innerText = timeleft;
-      if (timeleft <= 0) {
-        clearInterval(gameTimer);
-        clearInterval(moleTimer);
-        timeduration.style.animation = "none";
-        alert("Game Over! Your score is " + score);
-        if (score > parseInt(highestScore.innerText)) {
-          highestScore.innerText = score;
-        }
-        scoreDisplay.innerText = 0;
-        timeDisplay.innerText = levels.easy.timeleft;
-        levelText.innerText = "Easy";
-        buttons.forEach((btn) => {
-          btn.disabled = false;
-          btn.style.opacity = 1;
-        });
+// Game board
+function startGame() {
+  timeduration.style.animation = `reverseLoader ${timeleft}s linear forwards`;
+  let countdown = setInterval(() => {
+    timeleft--;
+    timeDisplay.innerText = timeleft;
+    if (timeleft <= 0) {
+      clearInterval(countdown);
+      clearInterval(moleInterval);
+      columns.forEach((col) => (col.innerText = ""));
+      if (score > parseInt(highestScore.innerText)) {
+        highestScore.innerText = score;
       }
-    }, 1000);
+      alert("Game Over! Your score is " + score);
+      score = 0;
+      scoreDisplay.innerText = score;
+      timeDisplay.innerText = levels.easy.timeleft;
+      // Re-enable difficulty buttons
+      buttons.forEach((btn) => {
+        btn.disabled = false;
+        btn.style.opacity = 1;
+      });
+    }
+  }, 1000);
+
+  // Mole spawner (based on moleSpeed)
+  let moleInterval = setInterval(() => {
+    let index = Math.floor(Math.random() * columns.length);
+    columns[index].innerText = "mole";
+      columns[index].addEventListener("click", () => {
+        score += points;
+        scoreDisplay.innerText = score;
+      columns.forEach((col) => col.innerText = "");
+      });
+    setTimeout(() => {
+      if (columns[index].innerText === "mole") {
+        columns[index].innerText = "";
+      }
+    }, moleSpeed - 200);
   }, moleSpeed);
 }
-startButton.addEventListener("click", () => {
-  startGame();
-  startAnimation();
+
+startButton.addEventListener("click", async () => {
+  buttons.forEach((btn) => {
+    btn.disabled = true;
+    btn.style.opacity = 0.6;
+  });
+    startGame();
 });
