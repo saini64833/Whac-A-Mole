@@ -77,7 +77,7 @@ buttons.forEach((button) => {
 });
 
 async function startGame() {
-  timeduration.style.animation = `loader ${timeleft}s linear forwards`;
+  timeduration.style.animation = `loader ${timeleft}s linear reverse forwards`;
   countdown = setInterval(() => {
     timeleft--;
     timeDisplay.innerText = timeleft;
@@ -97,17 +97,14 @@ async function startGame() {
   moleInterval = setInterval(spawnMoles, moleSpeed);
 }
 
-
-
 async function spawnMoles() {
   let index = Math.floor(Math.random() * columns.length);
   columns[index].innerText = "mole";
   console.log(moleSpeed);
-  await delay(moleSpeed - 200);
+  await delay(moleSpeed - 300);
 
   columns[index].innerText = "";
 }
-
 
 async function endGame() {
   clearInterval(countdown);
@@ -128,6 +125,7 @@ async function endGame() {
     btn.style.opacity = 1;
   });
   startButton.disabled = false;
+  timeduration.style.animation = "none";
 }
 
 resetButton.addEventListener("click", async () => {
@@ -135,18 +133,21 @@ resetButton.addEventListener("click", async () => {
   clearInterval(moleInterval);
   score = 0;
   scoreDisplay.innerText = score;
-  timeDisplay.innerText = levels.easy.timeleft;
   startButton.disabled = false;
+  timeDisplay.innerText = levels.easy.timeleft;
   buttons.forEach((btn) => {
     btn.disabled = false;
     btn.style.opacity = 1;
   });
+  timeduration.style.animation = "none";
 });
 
 startButton.addEventListener("click", async () => {
   startButton.disabled = true;
   resetButton.disabled = false;
-  score = 0;
-  scoreDisplay.innerText = score;
-  startGame();
+  buttons.forEach((btn) => {
+    btn.disabled = true;
+    btn.style.opacity = 0.6;
+  });
+  await startGame();
 });
