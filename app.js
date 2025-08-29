@@ -4,7 +4,7 @@ const easyButton = document.querySelector(".easy");
 const mediumButton = document.querySelector(".medium");
 const hardButton = document.querySelector(".hard");
 let levelText = document.querySelector(".level");
-
+let startinstruction = document.querySelector(".clew");
 // difficulty panel handle
 const levels = {
   easy: {
@@ -32,6 +32,7 @@ let timeDisplay = document.querySelector(".time");
 const columns = document.querySelectorAll(".column");
 let timeduration = document.querySelector(".loader");
 let highestScore = document.querySelector(".high-value");
+let highestScoreHeader = document.querySelector(".value");
 
 let score = 0;
 let points = levels.easy.points;
@@ -112,6 +113,7 @@ async function endGame() {
   columns.forEach((col) => (col.innerText = ""));
   if (score > parseInt(highestScore.innerText)) {
     highestScore.innerText = score;
+    highestScoreHeader.innerText=score;
   }
 
   alert("Game Over! Your score is " + score);
@@ -119,7 +121,7 @@ async function endGame() {
   score = 0;
   scoreDisplay.innerText = score;
   timeDisplay.innerText = levels.easy.timeleft;
-
+  startinstruction.style.display = "flex";
   buttons.forEach((btn) => {
     btn.disabled = false;
     btn.style.opacity = 1;
@@ -131,6 +133,9 @@ async function endGame() {
 resetButton.addEventListener("click", async () => {
   clearInterval(countdown);
   clearInterval(moleInterval);
+  startinstruction.style.display = "flex";
+  startinstruction.style.alignItems="center";
+  startinstruction.style.justifyContent="center";
   score = 0;
   scoreDisplay.innerText = score;
   startButton.disabled = false;
@@ -143,6 +148,7 @@ resetButton.addEventListener("click", async () => {
 });
 
 startButton.addEventListener("click", async () => {
+  startinstruction.style.display = "none";
   startButton.disabled = true;
   resetButton.disabled = false;
   buttons.forEach((btn) => {

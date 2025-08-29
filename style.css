@@ -46,6 +46,10 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap:1rem;
+}
+.value{
+  font-size: 1.2rem;
 }
 .score i,
 p {
@@ -272,3 +276,4 @@ p {
   from { width: 0%; }
   to   { width: 100%; }
 }
+
